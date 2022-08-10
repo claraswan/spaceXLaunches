@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpaceX Launches</title>
+</head>
+<body>
+
+    <!-- Provides CDN (content delivery Network) -->
+    <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+    </script>
+    
+    <canvas id="launchChart" width="800" height="800"></canvas>
+
+    <script>
+
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const launchChart = new Chart(ctx,  {
+            type: "scatter",
+            data: {},
+            options: {}
+        });
+
+    </script>
+    
+</body>
+</html>
