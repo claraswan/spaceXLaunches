@@ -1,8 +1,21 @@
 "use strict"
 
-
+const axios = require('axios').default;
 
 const launchChart = document.getElementById('launchChart');
+
+
+/// API Request ///
+axios.get('https://api.spacexdata.com/v4/launches/latest').then((res) => {
+
+    const data = res.data.results;
+    console.log(data);
+
+}).catch((err) => {
+    console.log(err);
+})
+/// END ///
+
 
 //// PLOTLY ////
 const successes = {
