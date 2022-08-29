@@ -1,0 +1,9 @@
+body {
+    background: lavender;
+    font-family: monospace;
+}
+
+#launchChart {
+    background: white;
+    border: solid 1px black;
+}
