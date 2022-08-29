@@ -1,5 +1,5 @@
-<<<<<<< HEAD
-# spaceXlaunches
-=======
 # spaceXLaunches
->>>>>>> e48093f76c3554e0d19e2debfee9ce5c3130f8b1
+
+This project pulls data from the (unofficial) SpaceX API, using Axios. It is visualized using the PlotlyJS graphing library. 
+
+More graphs with different metrics to come!
