@@ -6,4 +6,6 @@ body {
 #launchChart {
     background: white;
     border: solid 1px black;
+    width: 80rem;
+    height: 40rem;
 }
