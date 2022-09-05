@@ -80,5 +80,6 @@ axios.get('https://api.spacexdata.com/v4/launches').then((res) => {
 }).then(() => {
     Plotly.newPlot(launchChart, data, layout);
 }).catch((err) => {
+    alert('Please reload the page.')
     console.log(err);
 })
