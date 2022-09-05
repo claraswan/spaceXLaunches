@@ -1,36 +1,20 @@
 "use strict"
 
-
 const launchChart = document.getElementById('launchChart');
 let successfulLaunches = []
 let failedLaunches = [];
 const yearOfSuccessfulLaunch = [];
 const yearOfFailedLaunch = [];
-const numOfSuccessfulLaunchEachYear = [];
-const numOfFailedLaunchEachYear = [];
+let launchSuccesses = {};
+let launchFailures = {};
+let myArray;
 
-// [1, 1, 1, 1, 1, 8]
+function getOccurrence(array, value) {
+    return array.filter((v) => (v === value)).length;
+}
 
 //// PLOTLY ////
-const successes = {
-    x: yearOfSuccessfulLaunch,
-    y: numOfSuccessfulLaunchEachYear,
-    mode: 'markers',
-    name: 'successes',
-    marker: {size: 6, color: '#0f0'},
-    type: 'bar'
-};
-  
-const failures = {
-    x: yearOfFailedLaunch,
-    y: [1, 1, 1, 1, 1, 8],
-    mode: 'markers',
-    name: 'failures',
-    marker: {size: 6, color: '#f00'},
-    type: 'bar'
-};
-
-const data = [successes, failures];
+let data = []
 
 const layout = {
     barmode: 'stack',
@@ -44,14 +28,10 @@ const layout = {
     yaxis: {
         title: '# of launches',
         titlefont: {size: 16},
-        range: [0, 1500]
-    },
+        range: [0, 40]
+    }
 }
-
-/// END ///
-function getOccurrence(array, value) {
-    return array.filter((v) => (v === value)).length;
-}
+/// ///
 
 
 /// API Request ///
@@ -78,24 +58,36 @@ axios.get('https://api.spacexdata.com/v4/launches').then((res) => {
     
     for (const year of yearOfSuccessfulLaunch) {
         const numOfSuccessfulLaunches = getOccurrence(yearOfSuccessfulLaunch, year)
-        numOfSuccessfulLaunchEachYear.push(numOfSuccessfulLaunches);
+        launchSuccesses[year] = numOfSuccessfulLaunches;
     }
 
     for (const year of yearOfFailedLaunch) {
         const numOfFailedLaunches = getOccurrence(yearOfFailedLaunch, year)
-        numOfFailedLaunchEachYear.push(numOfFailedLaunches);
+        launchFailures[year] = numOfFailedLaunches;
     }
 
-    console.log('list of num of failed launches: ', numOfFailedLaunchEachYear);
-    console.log('successful launches: ', successfulLaunches);
-    console.log('failed launches: ', failedLaunches);
-    console.log('years of successful launches: ', yearOfSuccessfulLaunch);
-    console.log('years of failed launches: ', yearOfFailedLaunch);
+    const successes = {
+        x: Object.keys(launchSuccesses),
+        y: Object.values(launchSuccesses),
+        mode: 'markers',
+        name: 'successes',
+        marker: {size: 6, color: '#0f0'},
+        type: 'bar'
+    };
+      
+    const failures = {
+        x: Object.keys(launchFailures),
+        y: Object.values(launchFailures),
+        mode: 'markers',
+        name: 'failures',
+        marker: {size: 6, color: '#f00'},
+        type: 'bar'
+    };
+    
+    data = [successes, failures];
 
-
-}).catch((err) => {
-    console.log(err);
 }).then(() => {
     Plotly.newPlot(launchChart, data, layout);
+}).catch((err) => {
+    console.log(err);
 })
-/// END ///
