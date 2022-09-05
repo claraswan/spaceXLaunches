@@ -1,20 +1,17 @@
 "use strict"
 
 const launchChart = document.getElementById('launchChart');
-let successfulLaunches = []
-let failedLaunches = [];
 const yearOfSuccessfulLaunch = [];
 const yearOfFailedLaunch = [];
 let launchSuccesses = {};
 let launchFailures = {};
-let myArray;
 
 function getOccurrence(array, value) {
     return array.filter((v) => (v === value)).length;
 }
 
 //// PLOTLY ////
-let data = []
+let data = [];
 
 const layout = {
     barmode: 'stack',
@@ -23,7 +20,7 @@ const layout = {
     xaxis: {
         title: 'year of launch',
         titlefont: {size: 16},
-        range: [2004, 2024]
+        range: [2005, 2023]
     },
     yaxis: {
         title: '# of launches',
@@ -42,17 +39,11 @@ axios.get('https://api.spacexdata.com/v4/launches').then((res) => {
     for (let launch of allLaunches) {
 
         if (launch.success) {
-
-            successfulLaunches.push(launch.name);
             let d = new Date(launch.date_local);
             yearOfSuccessfulLaunch.push(d.getFullYear());
-
         } else {
-
-            failedLaunches.push(launch.name);
             let d = new Date(launch.date_local);
             yearOfFailedLaunch.push(d.getFullYear());
-            
         }
     }
     
@@ -71,7 +62,7 @@ axios.get('https://api.spacexdata.com/v4/launches').then((res) => {
         y: Object.values(launchSuccesses),
         mode: 'markers',
         name: 'successes',
-        marker: {size: 6, color: '#0f0'},
+        marker: {size: 6, color: '#55125A'},
         type: 'bar'
     };
       
@@ -80,7 +71,7 @@ axios.get('https://api.spacexdata.com/v4/launches').then((res) => {
         y: Object.values(launchFailures),
         mode: 'markers',
         name: 'failures',
-        marker: {size: 6, color: '#f00'},
+        marker: {size: 6, color: '#e06666'},
         type: 'bar'
     };
     
